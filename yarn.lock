@@ -169,9 +169,24 @@
   dependencies:
     tslib "^1.9.0"
 
+"@angular/pwa@^0.6.8":
+  version "0.6.8"
+  resolved "https://registry.yarnpkg.com/@angular/pwa/-/pwa-0.6.8.tgz#2bc0d8e64e997bdfb39bbd2301322c0d2163851a"
+  dependencies:
+    "@angular-devkit/core" "0.6.8"
+    "@angular-devkit/schematics" "0.6.8"
+    "@schematics/angular" "0.6.8"
+    typescript "~2.6.2"
+
 "@angular/router@^6.0.0":
   version "6.0.4"
   resolved "https://registry.yarnpkg.com/@angular/router/-/router-6.0.4.tgz#81c96dfa42a8c4a218cbd450b1e8959a76ea9595"
+  dependencies:
+    tslib "^1.9.0"
+
+"@angular/service-worker@^6.0.0":
+  version "6.0.4"
+  resolved "https://registry.yarnpkg.com/@angular/service-worker/-/service-worker-6.0.4.tgz#c9439c482b4bac10d6b1bd08c8245e9eaccd6346"
   dependencies:
     tslib "^1.9.0"
 
@@ -5994,6 +6009,10 @@ typedarray@^0.0.6:
 "typescript@>=2.6.2 <2.8", typescript@~2.7.2:
   version "2.7.2"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.2.tgz#2d615a1ef4aee4f574425cdff7026edf81919836"
+
+typescript@~2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.6.2.tgz#3c5b6fd7f6de0914269027f03c0946758f7673a4"
 
 typescript@~2.9.1:
   version "2.9.1"
