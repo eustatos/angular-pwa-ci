@@ -7,6 +7,10 @@ const routes: Routes = [
     loadChildren: './table/table.module#TableModule'
   },
   {
+    path: 'dashboard',
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
+  },
+  {
     path: '',
     redirectTo: '',
     pathMatch: 'full'
