@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "dist/angular-pwa-ci",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
