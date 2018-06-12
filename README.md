@@ -2,6 +2,8 @@
 
 # PWA Angular 6 с lazy load modules и автодеплоем на firebase
 
+![](https://habrastorage.org/webt/vm/bq/wn/vmbqwn8xcjl9mog8uhadwiuoj9o.png)
+
 Нам необоходим angular-cli версии не ниже 6.0.0, поэтому проверим версию установленного пакета:
 ```bash
 ng --version
