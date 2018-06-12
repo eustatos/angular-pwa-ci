@@ -143,13 +143,90 @@ ng g @angular/material:material-nav --name=nav -m app
    styleUrls: ['./nav.component.css']
  })
 ```
-
-
-
 Создадим модуль
 ```bash
-ng g m tables -m app --routing
+ng g m table --routing
 ```
-В созданном модуле `tables` создадим компонент с уже готовой разметкой и стилями.
+В созданном модуле `table` создадим компонент с уже готовой разметкой и стилями.
 ```bash
-ng g @angular/material:material-nav --name=table
+ng g @angular/material:material-nav --name=table --flat=table
+```
+```diff
+  // src/app/app-routing.module.ts
+-const routes: Routes = [];
++const routes: Routes = [
++  {
++    path: 'table',
++    loadChildren: './table/table.module#TableModule'
++  },
++  {
++    path: '',
++    redirectTo: '',
++    pathMatch: 'full'
++  }
++];
+```
+```diff
+  // src/app/table/table-routing.module.ts
+-const routes: Routes = [];
++const routes: Routes = [
++  {
++    path: '',
++    component: TableComponent
++  }
++];
+```
+Заменим ссылку на `routerLink` и добавим `router-outlet`
+```diff
+  // src/app/app.component.html
+       <mat-toolbar color="primary">Menu</mat-toolbar>
+     <mat-nav-list>
+-      <a mat-list-item href="#">Link 1</a>
++      <a mat-list-item routerLink="/table">Table</a>
+       <a mat-list-item href="#">Link 2</a>
+       <a mat-list-item href="#">Link 3</a>
+     </mat-nav-list>
+@@ -25,5 +25,6 @@
+       </button>
+       <span>Application Title</span>
+     </mat-toolbar>
++    <router-outlet></router-outlet>
+   </mat-sidenav-content>
+ </mat-sidenav-container>
+```
+После этого запустим наше приложение в режиме разработки `ng serve`. Обратите внимание. Если до этого вы находились в этом режиме, то нужно запустить заново.
+Мы можем наблюдать, что создался дополнительный chunk.
+А в панели разработчика на вкладке network мы увидим, про при переходе по ссылке наш модуль table подгружается динамически.
+![](https://habrastorage.org/webt/06/cz/zh/06czzhh_-fbhg-oyieow8cnciom.png)
+
+Создадим еще один функциональный модуль и компонент с разметкой для dashboard
+```bash
+ng g m dashboard --routing
+ng g @angular/material:material-dashboard --flat=dashboard --name=dashboard
+```
+Действия по изменению кода - аналогично модулю table.
+
+В результате мы получим PWA приложение с двумя динамически подгружаемыми функциональными модулями.
+Самое время перейти к реализации автоматического деплоя нашего приложения на firebase.
+
+## CI/CD для Firebase
+
+На понадобится аккаунт на https://travis-ci.org и аккаунт на https://github.com.
+Создадим репозиторий `angular-pwa-ci` в github и разместим в нем код нашего приложения
+```bash
+git remote add https://github.com/<ваш аккаунт>/angular-pwa-ci.git
+git push -u origin master
+```
+После этого подключим наш репозиторий `angular-pws-ci` к сервису travis-ci. Для этого на странице `https://travis-ci.org/profile/` нажмем кнопку синхронизации, и в списке репозиторием подключим `angular-pwa-ci`
+![](https://habrastorage.org/webt/_g/xe/aw/_gxeawynszn-yzeqjiyyeaxdgyg.png)
+
+Для деплоя нашего приложения нам понадобится ключ для этого выполним команду
+```bash
+firebase login:ci
+```
+Выдача этой команды будет содержать ключ. Скопируем его значение и добавим его в переменные окружения travis-ci под именем FIREBASE_TOKEN
+![](https://habrastorage.org/webt/z8/0h/xe/z80hxebfqenhfesm0znit3ua06a.png)
+Осталось добавить в наш проект файл .travis-ci.yml
+```
+
+
