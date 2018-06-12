@@ -1,9 +1,9 @@
 language: node_js
 
 build:
-  image: node
   stage: build
   before_script:
+  - nvm install node
   - npm install
   script:
   - npm run build
@@ -16,9 +16,9 @@ build:
     - node_modules/
 
 deploy:
-  image: node
   stage: deploy
   before_script:
+  - nvm install node
   - npm i -g firebase-tools
   script:
   - firebase use --token $FIREBASE_TOKEN angular-pwa-ci
