@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/eustatos/angular-pwa-ci.svg?branch=master)](https://travis-ci.org/eustatos/angular-pwa-ci)
+
+# PWA Angular 6 с lazy load modules и автодеплоем на firebase
 
 Нам необоходим angular-cli версии не ниже 6.0.0, поэтому проверим версию установленного пакета:
 ```bash
