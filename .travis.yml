@@ -1,0 +1,30 @@
+language: node_js
+
+build:
+  stage: build
+  before_script:
+  - npm install
+  script:
+  - npm run build
+  artifacts:
+    paths:
+    - dist/angular-pwa-ci/
+  cache:
+    policy: push
+    paths:
+    - node_modules/
+
+deploy:
+  stage: deploy
+  before_script:
+  - npm i -g firebase-tools
+  script:
+  - firebase use --token $FIREBASE_TOKEN angular-pwa-ci
+  - firebase deploy -m "build $TRAVIS_BUILD_ID" --non-interactive --token $FIREBASE_TOKEN
+  cache:
+    policy: pull
+    paths:
+    - node_modules/
+    only:
+      refs:
+      - master
