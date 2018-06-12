@@ -62,6 +62,7 @@ ng build --prod
 ```
 ex-node-
 ```
+![](https://habrastorage.org/webt/qq/nx/px/qqnxpxy1fg2x543ojpwrypsyasc.gif)
 Согласится с предложенным сниппетом, указать желаемый порт и папку, в которой находятся файлы для отображения. И все. Можно запускать:
 ```bash
 node server.js
