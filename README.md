@@ -1,8 +1,9 @@
 [![Build Status](https://travis-ci.org/eustatos/angular-pwa-ci.svg?branch=master)](https://travis-ci.org/eustatos/angular-pwa-ci)
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-yellow.svg)](https://conventionalcommits.org)
 
 # PWA Angular 6 с lazy load modules и автодеплоем на firebase
 
-![](https://habrastorage.org/webt/vm/bq/wn/vmbqwn8xcjl9mog8uhadwiuoj9o.png)
+![](https://habrastorage.org/webt/zg/2w/rc/zg2wrcvcxd2b2ytvs5uu_x3qxiq.png)
 
 Нам необоходим angular-cli версии не ниже 6.0.0, поэтому проверим версию установленного пакета:
 ```bash
@@ -24,7 +25,7 @@ git init
 git add .
 git commit -m "Initial commit"
 ```
-Следующая команда превратит наш проект Progressive Web Application (PWA)
+Следующая команда превратит наш проект в Progressive Web Application (PWA)
 ```bash
 ng add @angular/pwa --project "angular-pwa-ci"
 ```
@@ -121,7 +122,7 @@ lighthouse https://angular-pwa-ci.firebaseapp.com
 
 ![](https://habrastorage.org/webt/wg/sn/qv/wgsnqvw-8vqssjbvajlxef_f8vc.png)
 
-Вот наше прилоение стало PWA на 100%.
+Вот наше приложение стало PWA на 100%.
 
 ## Lazy loading modules
 
@@ -154,7 +155,7 @@ ng g m table --routing
 ```
 В созданном модуле `table` создадим компонент с уже готовой разметкой и стилями.
 ```bash
-ng g @angular/material:material-nav --name=table --flat=table
+ng g @angular/material:material-nav --name=table --flat=table -m table
 ```
 ```diff
   // src/app/app-routing.module.ts
@@ -207,7 +208,7 @@ ng g @angular/material:material-nav --name=table --flat=table
 Создадим еще один функциональный модуль и компонент с разметкой для dashboard
 ```bash
 ng g m dashboard --routing
-ng g @angular/material:material-dashboard --flat=dashboard --name=dashboard
+ng g @angular/material:material-dashboard --flat=dashboard --name=dashboard -m dashboard
 ```
 Действия по изменению кода - аналогично модулю table.
 
@@ -216,7 +217,7 @@ ng g @angular/material:material-dashboard --flat=dashboard --name=dashboard
 
 ## CI/CD для Firebase
 
-На понадобится аккаунт на https://travis-ci.org и аккаунт на https://github.com.
+Нам понадобится аккаунт на https://travis-ci.org и аккаунт на https://github.com.
 Создадим репозиторий `angular-pwa-ci` в github и разместим в нем код нашего приложения
 ```bash
 git remote add https://github.com/<ваш аккаунт>/angular-pwa-ci.git
@@ -231,7 +232,25 @@ firebase login:ci
 ```
 Выдача этой команды будет содержать ключ. Скопируем его значение и добавим его в переменные окружения travis-ci под именем FIREBASE_TOKEN
 ![](https://habrastorage.org/webt/z8/0h/xe/z80hxebfqenhfesm0znit3ua06a.png)
+
 Осталось добавить в наш проект файл .travis-ci.yml
+```yml
+language: node_js
+node_js:
+  - "node"
+
+before_script:
+- npm i -g firebase-tools
+script:
+- npm install
+- npm run build
+- firebase use --token $FIREBASE_TOKEN angular-pwa-ci
+- firebase deploy -m "build $TRAVIS_BUILD_ID" --non-interactive --token $FIREBASE_TOKEN
+cache:
+  directories:
+  - "node_modules"
 ```
+Сделаем commit и отправим наш на github. В результате сработает триггер, который запустит job на travis-ci. По окончании наш проект на хостинге firebase будет обновлен.
 
-
+Исходный код проекта доступен https://github.com/eustatos/angular-pwa-ci.
+Демо проекта - https://angular-pwa-ci.firebaseapp.com/
