@@ -129,8 +129,10 @@ lighthouse https://angular-pwa-ci.firebaseapp.com
 Немного украсим наше приложение. Заодно исследуем еще одну из возможностей angular 6.
 Добавим поддержку @angular/material для нашего проекта.
 ```bash
-ng add @angular/material @angular/cdk
+ng add @angular/material@6.2.1 @angular/cdk
 ```
+UPD: Версию для angular/material указываем, так как последняя 6.3 выдает ошибку.
+
 Теперь создадим навигационную страницу нашего приложения
 ```bash
 ng g @angular/material:material-nav --name=nav -m app
